@@ -1,0 +1,84 @@
+// GameManager.cs
+using StarterAssets;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class GameManager : MonoBehaviour
+{
+    public static GameManager Instance { get; private set; }
+
+    [Header("Win/Lose UI")]
+    [SerializeField] private GameObject endPanel;
+    [SerializeField] private TMP_Text endText;
+    [SerializeField] private float freezeTimeScale = 0f;
+
+    private bool _ended = false;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+            Destroy(gameObject);
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
+        if (endPanel != null)
+            endPanel.SetActive(false);
+    }
+
+    /// <summary>
+    /// Show the win message.
+    /// </summary>
+    public void WinGame(string message)
+    {
+        ShowEnd(message);
+    }
+
+    /// <summary>
+    /// Show the lose message.
+    /// </summary>
+    public void LoseGame(string message)
+    {
+        ShowEnd(message);
+    }
+
+    /// <summary>
+    /// Displays end UI, unlocks cursor, disables player GameObject, and pauses time.
+    /// </summary>
+    private void ShowEnd(string message)
+    {
+        if (_ended) return;
+        _ended = true;
+
+        // Display the message
+        if (endText != null)
+            endText.text = message;
+        if (endPanel != null)
+            endPanel.SetActive(true);
+
+        // Unlock and show cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        // Disable the entire local player GameObject
+        // Assumes your player has a ThirdPersonController component on its root
+        var tpc = FindObjectOfType<ThirdPersonController>();
+        if (tpc != null)
+            tpc.gameObject.SetActive(false);
+
+        // Pause the game
+        Time.timeScale = freezeTimeScale;
+    }
+
+    /// <summary>
+    /// Restart the current level.
+    /// </summary>
+    public void RestartLevel()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+}
