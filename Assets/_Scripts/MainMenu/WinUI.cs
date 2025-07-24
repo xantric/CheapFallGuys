@@ -7,7 +7,13 @@ public class WinUI : MonoBehaviour
 {
     
     public void MainMenu() {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SceneManager.LoadScene(0);
+    }
+
+    public void RestartGame() {
+        GameManager.Instance.RestartLevel();
     }
 
     public void Quit(){

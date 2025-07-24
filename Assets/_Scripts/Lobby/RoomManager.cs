@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Cinemachine;
 using Photon.Pun;
 using Photon.Realtime;
@@ -9,6 +10,7 @@ using UnityEngine;
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager Instance;
+
     // Start is called before the first frame update
     [Header("Player Object")]
     public GameObject player;
@@ -49,6 +51,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     private bool _spawned = false;
     private GameObject localPlayerInstance;
+
     private void Awake()
     {
         Instance = this;

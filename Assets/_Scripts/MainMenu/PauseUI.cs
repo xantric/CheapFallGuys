@@ -13,6 +13,8 @@ public class PauseUI : MonoBehaviour
     }
 
     public void MainMenu() {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SceneManager.LoadScene(0);
     }
 }

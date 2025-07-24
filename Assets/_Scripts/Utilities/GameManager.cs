@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     private bool _ended = false;
     private bool _paused = false;
+    private bool _canPause = false;
+    private bool _gameEnded = false;
 
     private void Awake()
     {
@@ -38,9 +40,10 @@ public class GameManager : MonoBehaviour
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            if(_paused) ResumeGame();
-            else PauseGame();
+        _canPause = !_gameEnded;
+        if (_canPause && Input.GetKeyDown(KeyCode.Escape)) {
+            if(!_paused) PauseGame();
+            else ResumeGame();
         }
     }
 
@@ -49,6 +52,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void WinGame(string message)
     {
+        _gameEnded = true;
         ShowEnd(message);
     }
 
@@ -57,6 +61,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoseGame(string message)
     {
+        _gameEnded = true;
         ShowEnd(message);
     }
 
