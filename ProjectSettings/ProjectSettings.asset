@@ -844,7 +844,13 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
+    Build: 0
+    Game Performance: 0
+    Legacy Analytics: 0
+    Purchasing: 0
+    UDP: 0
     UNet: 1
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -864,11 +870,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: d9680658-4825-44e9-8759-347437af8a4e
+  cloudProjectId: dc6b5a1a-04f6-4603-abd3-50c706a6875c
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: GameInk
-  organizationId: unity_atb2dnwkbewdgg
+  organizationId: wasi-husain
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
