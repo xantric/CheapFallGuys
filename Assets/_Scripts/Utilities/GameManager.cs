@@ -1,5 +1,6 @@
 // GameManager.cs
 using StarterAssets;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,7 +14,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text endText;
     [SerializeField] private float freezeTimeScale = 0f;
 
+    [Header("PauseUI")]
+    [SerializeField] private GameObject pauseUIPanel;
+
     private bool _ended = false;
+    private bool _paused = false;
 
     private void Awake()
     {
@@ -27,6 +32,16 @@ public class GameManager : MonoBehaviour
 
         if (endPanel != null)
             endPanel.SetActive(false);
+
+        if (pauseUIPanel != null)
+            pauseUIPanel.SetActive(false);
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if(_paused) ResumeGame();
+            else PauseGame();
+        }
     }
 
     /// <summary>
@@ -80,5 +95,25 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void PauseGame() {
+        Time.timeScale = freezeTimeScale;
+        pauseUIPanel.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        _paused = true;
+    }
+
+    public void ResumeGame() {
+        Time.timeScale = 1f;
+        pauseUIPanel.SetActive(false);
+
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+
+        _paused = false;
     }
 }
