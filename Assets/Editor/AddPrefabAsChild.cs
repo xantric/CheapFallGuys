@@ -6,6 +6,7 @@ public class AddPrefabAsChild : EditorWindow
     private GameObject prefab;
     private Vector3 localScale = Vector3.one;
     private Vector3 localPosition = Vector3.zero;
+    private Vector3 localRotation = Vector3.zero;
 
     [MenuItem("Tools/Add Prefab As Child")]
     public static void ShowWindow()
@@ -25,6 +26,7 @@ public class AddPrefabAsChild : EditorWindow
         );
 
         localPosition = EditorGUILayout.Vector3Field("Local Position", localPosition);
+        localRotation = EditorGUILayout.Vector3Field("Local Rotation", localRotation);
         localScale = EditorGUILayout.Vector3Field("Local Scale", localScale);
 
         EditorGUILayout.Space();
@@ -48,7 +50,7 @@ public class AddPrefabAsChild : EditorWindow
             GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
             instance.transform.SetParent(obj.transform);
             instance.transform.localPosition = localPosition;
-            instance.transform.localRotation = Quaternion.identity;
+            instance.transform.localRotation = Quaternion.Euler(localRotation);
             instance.transform.localScale = localScale;
 
             Undo.RegisterCreatedObjectUndo(instance, "Add Prefab As Child");
