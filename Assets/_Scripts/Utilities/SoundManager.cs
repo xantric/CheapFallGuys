@@ -12,6 +12,8 @@ public class SoundManager : MonoBehaviourPun
     [SerializeField] private AudioClip raceStartClip;
     [SerializeField] private AudioClip winClip;
     [SerializeField] private AudioClip loseClip;
+    [SerializeField] private AudioClip jumpClip;
+    [SerializeField] private AudioClip deathClip;
 
     private void Awake()
     {
@@ -32,6 +34,8 @@ public class SoundManager : MonoBehaviourPun
     public void PlayCountdownTick()
     {
         audioSource.PlayOneShot(countdownTickClip);
+
+        MusicManager.Instance.ChangeVolume(0.1f);
     }
 
     /// <summary>Play the race start sound.</summary>
@@ -39,17 +43,33 @@ public class SoundManager : MonoBehaviourPun
     public void PlayRaceStart()
     {
         audioSource.PlayOneShot(raceStartClip);
+
+        MusicManager.Instance.BeginMusic(MusicManager.MusicType.Game);
     }
 
     /// <summary>Play win sound locally.</summary>
     public void PlayWin()
     {
+        MusicManager.Instance.ChangeVolume(0.3f);
+
         audioSource.PlayOneShot(winClip);
     }
 
     /// <summary>Play lose sound locally.</summary>
     public void PlayLose()
     {
+        MusicManager.Instance.ChangeVolume(0.3f);
+
         audioSource.PlayOneShot(loseClip);
+    }
+
+    public void PlayJump()
+    {
+        audioSource.PlayOneShot(jumpClip);
+    }
+
+    public void PlayDeath()
+    {
+        audioSource.PlayOneShot(deathClip);
     }
 }

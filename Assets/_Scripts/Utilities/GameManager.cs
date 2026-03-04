@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
     public void WinGame(string message)
     {
         _gameEnded = true;
+        SoundManager.Instance.PlayWin();
         ShowEnd(message);
     }
 
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour
     public void LoseGame(string message)
     {
         _gameEnded = true;
+        SoundManager.Instance.PlayLose();
         ShowEnd(message);
     }
 
