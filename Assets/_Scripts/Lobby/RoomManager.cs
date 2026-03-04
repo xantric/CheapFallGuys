@@ -64,7 +64,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         Debug.LogWarning(message: "Connecting. . . ");
         Debug.LogWarning(roomName);
-        PhotonNetwork.JoinOrCreateRoom(roomName, new Photon.Realtime.RoomOptions(), null);
+        PhotonNetwork.JoinOrCreateRoom(roomName, new Photon.Realtime.RoomOptions { MaxPlayers = requiredPlayers }, null);
 
         nickNameUI.SetActive(false);
         connectingUI.SetActive(true);
