@@ -131,7 +131,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             row * spawnSpacing - offset
         );
 
-        Vector3 spawnPos = gridCenter + localOffset;
+        Vector3 spawnPos = spanPoint.position + localOffset;
         Debug.LogWarning(spawnPos);
         SpawnPlayer( spawnPos );
         
@@ -223,6 +223,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
             var push = localPlayerInstance.GetComponent<BasicRigidBodyPush>();
             if (push != null) push.enabled = true;
         }
+    }
+
+    public void SetRequiredPlayers(int value)
+    {
+        requiredPlayers = (byte)(value + 2);
+        Debug.LogWarning("Required players set to: " + requiredPlayers);
     }
 
 }

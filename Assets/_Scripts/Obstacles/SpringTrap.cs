@@ -1,13 +1,15 @@
 ﻿// SpringTrap.cs
 using UnityEngine;
 using System.Collections;
+using StarterAssets;
 
 [RequireComponent(typeof(Collider), typeof(Rigidbody))]
 public class SpringTrap : MonoBehaviour
 {
     [Header("Launch Settings")]
     [Tooltip("Initial launch speed along the spring's up axis.")]
-    [SerializeField] private float launchSpeed = 15f;
+    [SerializeField] private float verticalLaunchSpeed = 15f;
+    [SerializeField] private float horizontalLaunchSpeed = 10f;
     [Tooltip("How long (seconds) the launch impulse is applied.")]
     [SerializeField] private float launchDuration = 0.5f;
     [Tooltip("How quickly horizontal velocity decays (higher = faster).")]
@@ -58,7 +60,8 @@ public class SpringTrap : MonoBehaviour
 
         // build the launch velocity along the spring’s up axis
         //Debug.Log(transform.right);
-        Vector3 launchVelocity = transform.up * launchSpeed + -1 * transform.right * launchSpeed;
+        Vector3 launchVelocity = transform.up * verticalLaunchSpeed + 
+        other.gameObject.GetComponent<ThirdPersonController>().targetDirection * horizontalLaunchSpeed;
         receiver.Initialize(launchVelocity, launchDuration, horizontalDamping);
     }
 

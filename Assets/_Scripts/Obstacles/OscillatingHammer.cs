@@ -5,6 +5,7 @@ using UnityEngine;
 public class OscillatingHammer : MonoBehaviour
 {
     [Header("Swing Settings")]
+    public bool shouldSwing = true;
     [Tooltip("Local axis around which the hammer will swing.")]
     [SerializeField] private Vector3 swingAxis = Vector3.forward;
     [Tooltip("Maximum swing angle in degrees.")]
@@ -26,6 +27,7 @@ public class OscillatingHammer : MonoBehaviour
     [Tooltip("Tag of your player GameObject.")]
     [SerializeField] private string playerTag = "Player";
 
+    
     private Quaternion _initialLocalRot;
 
     private void Reset()
@@ -45,6 +47,7 @@ public class OscillatingHammer : MonoBehaviour
 
     private void Update()
     {
+        if (!shouldSwing) return;
         // Oscillate like a pendulum: angle = A * sin(ωt)
         float angle = swingAngle * Mathf.Sin(Time.time * swingSpeed * Mathf.PI * 2f);
         transform.localRotation = _initialLocalRot * Quaternion.AngleAxis(angle, swingAxis.normalized);

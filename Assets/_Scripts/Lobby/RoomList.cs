@@ -12,6 +12,10 @@ public class RoomList : MonoBehaviourPunCallbacks
     public GameObject RoomManagerGameObject;
     public RoomManager roomManager;
 
+    [Header("Connecting UI")]
+    public GameObject ConnectingUI;
+    public GameObject LobbyUI;
+
     [Header("UI")]
     public GameObject roomNameUI;
     public Transform parentUI;
@@ -25,12 +29,13 @@ public class RoomList : MonoBehaviourPunCallbacks
 
     IEnumerator Start()
     {
+        ConnectingUI.SetActive(true);
+        LobbyUI.SetActive(false);
         if (PhotonNetwork.InRoom)
         {
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.Disconnect();
         }
-
         yield return new WaitUntil(() => !PhotonNetwork.IsConnected);
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -44,7 +49,12 @@ public class RoomList : MonoBehaviourPunCallbacks
         
         PhotonNetwork.JoinLobby();
     }
-
+    public override void OnJoinedLobby()
+    {
+        base.OnJoinedLobby();
+        ConnectingUI.SetActive(false);
+        LobbyUI.SetActive(true);
+    }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         if(cachedRoomList.Count <= 0)
