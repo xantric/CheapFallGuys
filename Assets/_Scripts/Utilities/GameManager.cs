@@ -40,6 +40,12 @@ public class GameManager : MonoBehaviour
     }
 
     private void Update() {
+        if (_ended)
+        {
+            ForceUnlockCursor();
+            return;
+        }
+
         _canPause = !_gameEnded;
         if (_canPause && Input.GetKeyDown(KeyCode.Escape)) {
             if(!_paused) PauseGame();
@@ -82,14 +88,21 @@ public class GameManager : MonoBehaviour
             endPanel.SetActive(true);
 
         // Unlock and show cursor
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        ForceUnlockCursor();
 
         // Disable the entire local player GameObject
         // Assumes your player has a ThirdPersonController component on its root
         var tpc = FindObjectOfType<ThirdPersonController>();
         if (tpc != null)
+        {
+            var input = tpc.GetComponent<StarterAssetsInputs>();
+            if (input != null)
+            {
+                input.cursorLocked = false;
+                input.cursorInputForLook = false;
+            }
             tpc.gameObject.SetActive(false);
+        }
 
         // Pause the game
         Time.timeScale = freezeTimeScale;
@@ -108,8 +121,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = freezeTimeScale;
         pauseUIPanel.SetActive(true);
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        ForceUnlockCursor();
 
         _paused = true;
     }
@@ -122,5 +134,11 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
 
         _paused = false;
+    }
+
+    private void ForceUnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }

@@ -15,6 +15,7 @@ public class MusicManager : MonoBehaviour
     private AudioClip currentClip;
     private float currentTime;
     private bool wasPlaying;
+    private bool playRequested;
     public enum MusicType
     {
         MainMenu,
@@ -32,11 +33,15 @@ public class MusicManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+
     }
 
     private void Update()
     {
-        currentTime = audioSource.time;
+        if (audioSource != null)
+            currentTime = audioSource.time;
     }
 
     public void BeginMusic(MusicType musicType, float volume = 1f)
@@ -44,6 +49,7 @@ public class MusicManager : MonoBehaviour
         AudioClip musicClip = (musicType == MusicType.MainMenu) ? musicClip_mainMenu : musicClip_game;
 
         currentClip = musicClip;
+        playRequested = true;
 
         if (audioSource == null) return;
 
@@ -54,10 +60,13 @@ public class MusicManager : MonoBehaviour
         audioSource.loop = true;
         audioSource.volume = volume;
         audioSource.Play();
+        wasPlaying = true;
     }
 
     public void RegisterAudioSource(AudioSource newSource)
     {
+        if (newSource == null) return;
+
         if (audioSource != null)
         {
             currentTime = audioSource.time;
@@ -72,18 +81,22 @@ public class MusicManager : MonoBehaviour
             audioSource.loop = true;
             audioSource.time = currentTime;
 
-            if (wasPlaying)
+            if (wasPlaying || playRequested)
                 audioSource.Play();
         }
     }
 
     public void PauseMusic()
     {
+        if (audioSource == null) return;
         audioSource.Pause();
+        wasPlaying = false;
+        playRequested = false;
     }
 
     public void ChangeVolume(float volume)
     {
+        if (audioSource == null) return;
         audioSource.volume = volume;
     }
 

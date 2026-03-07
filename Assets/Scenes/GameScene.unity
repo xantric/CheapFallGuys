@@ -6700,8 +6700,8 @@ MonoBehaviour:
   roomName: test
   requiredPlayers: 2
   raceCountdownDuration: 5
-  gridCenter: {x: -32.08, y: 2.87, z: -16.12}
-  spawnSpacing: 0.3
+  gridCenter: {x: -32.08, y: 3.37, z: -16.12}
+  spawnSpacing: 1
   spawnHeight: 0.5
   connectingTxt: {fileID: 1024667837}
 --- !u!114 &332156411

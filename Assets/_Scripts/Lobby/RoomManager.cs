@@ -72,7 +72,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.LogWarning("Room Joined");
-        
+        requiredPlayers = (byte)PhotonNetwork.CurrentRoom.MaxPlayers;
         //SpawnPlayer();
         TryStartGame();
     }

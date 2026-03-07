@@ -6,8 +6,9 @@ public class SetAsMusicSource : MonoBehaviour
 {
     private void Start()
     {
-        MusicManager.Instance.RegisterAudioSource(
-            GetComponent<AudioSource>()
-        );
+        AudioSource source = GetComponent<AudioSource>();
+        if (source == null) return;
+        if (MusicManager.Instance == null) return;
+        MusicManager.Instance.RegisterAudioSource(source);
     }
 }
